@@ -1,13 +1,17 @@
 import React from 'react'
 import NewBudget from './NewBudget'
+import BudgetControl from './BudgetControl'
 
 const Header = ({ budget, setBudget, isValidBudget, setIsValidBudget }) => {
     return (
         <header>
             <h1>Expenses Planner</h1>
             {isValidBudget ? (
+                
+                <BudgetControl
+                    budget={budget} 
+                ></BudgetControl>
 
-                <p>Budget Control</p>
             ) : (
                 <NewBudget
                     budget={budget}
