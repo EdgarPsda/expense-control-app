@@ -40,6 +40,7 @@ function App() {
       //Edit expense
       const updatedExpenses = expenses.map(expenseState => expenseState.id === expense.id ? expense : expenseState)
       setExpenses(updatedExpenses);
+      setExpenseEdit({});
     } else {
       //New Expense
       expense.id = generate_id();
@@ -52,6 +53,11 @@ function App() {
     setTimeout(() => {
       setModal(false)
     }, 500);
+  }
+
+  const deleteExpense = id => {
+    const updatedExpenses = expenses.filter(expense => expense.id !== id);
+    setExpenses(updatedExpenses);
   }
 
   return (
@@ -70,6 +76,7 @@ function App() {
             <ExpensesList
               expenses={expenses}
               setExpenseEdit={setExpenseEdit}
+              deleteExpense={deleteExpense}
             ></ExpensesList>
           </main>
           <div className='nuevo-gasto'>
@@ -89,6 +96,7 @@ function App() {
           setAnimModal={setAnimModal}
           saveExpense={saveExpense}
           expenseEdit={expenseEdit}
+          setExpenseEdit={setExpenseEdit}
         ></Modal>
       )}
     </div>

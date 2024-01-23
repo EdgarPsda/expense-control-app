@@ -26,7 +26,7 @@ const iconsCollection = {
 
 }
 
-const Expense = ({ expense, setExpenseEdit }) => {
+const Expense = ({ expense, setExpenseEdit, deleteExpense }) => {
 
     const { category, expenseName, amount, id, date } = expense;
 
@@ -40,7 +40,10 @@ const Expense = ({ expense, setExpenseEdit }) => {
 
     const trailingActions = () => (
         <TrailingActions>
-            <SwipeAction onClick={() => console.log('deleting...')}>
+            <SwipeAction
+                onClick={() => deleteExpense(id)}
+                destructive={true}
+            >
                 Delete
             </SwipeAction>
         </TrailingActions>
