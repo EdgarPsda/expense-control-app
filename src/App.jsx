@@ -4,6 +4,7 @@ import newExpenseIcon from './img/nuevo-gasto.svg'
 import Modal from './components/Modal';
 import { generate_id } from './helpers';
 import ExpensesList from './components/ExpensesList';
+import Filters from './components/Filters';
 
 function App() {
 
@@ -17,6 +18,8 @@ function App() {
     localStorage.getItem('expenses') ? JSON.parse(localStorage.getItem('expenses')) : []
   );
   const [expenseEdit, setExpenseEdit] = useState({});
+  const [filter, setFilter] = useState('');
+  const [expensesFiltered, setExpensesFiltered] = useState([]);
 
   useEffect(() => {
     if (Object.keys(expenseEdit).length > 0) {
@@ -38,6 +41,14 @@ function App() {
   useEffect(() => {
     localStorage.setItem('expenses', JSON.stringify(expenses) ?? []);
   }, [expenses])
+
+
+  useEffect(() => {
+    if (filter) {
+      const expensesFiltered = expenses.filter(expense => expense.category === filter);
+      setExpensesFiltered(expensesFiltered);
+    }
+  }, [filter])
 
 
   useEffect(() => {
@@ -96,10 +107,16 @@ function App() {
       {isValidBudget && (
         <>
           <main>
+            <Filters
+              filter={filter}
+              setFilter={setFilter}
+            ></Filters>
             <ExpensesList
               expenses={expenses}
               setExpenseEdit={setExpenseEdit}
               deleteExpense={deleteExpense}
+              filter={filter}
+              expensesFiltered={expensesFiltered}
             ></ExpensesList>
           </main>
           <div className='nuevo-gasto'>
